@@ -1,0 +1,11 @@
+.colbase{
+    display: flex;
+}
+.colbase > *{
+    font-size:0.8em;
+    flex: 1;
+}
+
+.colbase > .expand {
+    flex: 1.5;
+}

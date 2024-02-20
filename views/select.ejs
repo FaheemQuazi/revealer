@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revealer</title>
+</head>
+<body>
+    <h1>Revealer</h1>
+    <p>Select a presentation below</p>
+    <ul>
+        <% decks.forEach(d => { %>
+            <li><a href="/present/<%= d %>"><%= d %></a></li>
+        <% }) %>
+    </ul>
+</body>
+</html>

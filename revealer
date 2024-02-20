@@ -1,0 +1,4 @@
+#!/bin/bash
+
+appdir="/Users/faheem/Developer/revealer"
+node $appdir/server.js $@
