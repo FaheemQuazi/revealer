@@ -1,4 +1,7 @@
 #!/bin/bash
+# This is a simple script that you can add to your PATH
+# to make it easier to run the server from your terminal.
 
+# Replace the path below with your own path to the revealer install directory
 appdir="/Users/faheem/Developer/revealer"
 node $appdir/server.js $@

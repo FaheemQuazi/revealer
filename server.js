@@ -120,17 +120,16 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, { /* options */ });
 var currentSlideData = {};
 io.on("connection", (socket) => {
-    console.log("A user connected");
+    console.log("user connect", socket.id);
 
     socket.on("slidechanged", (data) => {
         currentSlideData = data;
-        console.log("CE: ", data);
         socket.broadcast.emit("slidechanged", data);
-        io.emit("updateText", data.notes);
+        io.emit("updateText", data.notes); // For anything that just needs notes
     });
 
     socket.on("disconnect", () => {
-        console.log("A user disconnected");
+        console.log("user disconnect", socket.id);
     });
     
     socket.emit("slidechanged", currentSlideData);
@@ -142,7 +141,7 @@ fs.watch(cwd, (eventType, filename) => {
 });
 
 // Start server
-httpServer.listen(3000, () => {
+httpServer.listen(3000, "localhost", () => {
     console.log("Revealer is at", __dirname);
     console.log("Presentations are at", cwd);
     console.log("Ready! http://localhost:3000");
@@ -155,7 +154,7 @@ httpServer.listen(3000, () => {
     }
 });
 
-// when the user presses ctrl+c exit gracefully and broadcast kill intent
+// exit gracefully
 process.on('SIGINT', () => {
     console.log("Shutting down...");
     io.emit("kill");
