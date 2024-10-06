@@ -1,11 +1,24 @@
-.colbase{
+section.standard > header {
+    height: 15%;
+    width: 100%;
+    font-size: 2em;
+    text-align: left;
+}
+
+section.standard > div {
+    width: 100%;
+    font-size: 1em;
+    text-align: left;
+}
+
+section.standard > div.columns {
     display: flex;
 }
-.colbase > *{
-    font-size:0.8em;
+section.standard > div.columns > * {
+    font-size: 1em;
     flex: 1;
 }
 
-.colbase > .expand {
+section.standard > div.columns > .emphasize {
     flex: 1.5;
 }

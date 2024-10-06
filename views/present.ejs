@@ -25,13 +25,14 @@
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
 		<script>
 			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-				slideNumber: 'c/t',
+				slideNumber: 'c',
 				controls: false,
 				keyboard: {
 					32: null, // space
@@ -41,8 +42,15 @@
 					40: null // down
 				},
 
+				width: 1280,
+				height: 900,
+				margin: 0.1,
+				center: false,
+				transition: 'none',
+				backgroundTransition: 'none',
+
 				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
 			});
 			
 		</script>

@@ -4,12 +4,14 @@ const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process')
 
+// BEGIN: CLI handling + Initialization
+
 // help menu
 if (argv["h"] || argv["help"]) {
 console.log(`
 Revealer - RevealJS Presentation Assistant
 ------------------------------------------
-This tool makes it easy to host a RevealJS presentation and simplifies the file structure required.
+This tool makes it easy to host a RevealJS presentation and simplifies some of the necessary setup needed.
 
 Command Format:
     revealer [-h|--help][--launch] [PRESENTATION.html]
@@ -58,6 +60,7 @@ if (argv["_"].length > 0 && argv["_"][0].endsWith(".html")) {
     }
 }
 
+// BEGIN: Server-side
 
 // Express Server
 const app = express();
