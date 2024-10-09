@@ -144,12 +144,12 @@ fs.watch(cwd, (eventType, filename) => {
 });
 
 // Start server
-httpServer.listen(3000, "localhost", () => {
+httpServer.listen(3000, "127.0.0.1", () => {
     console.log("Revealer is at", __dirname);
     console.log("Presentations are at", cwd);
-    console.log("Ready! http://localhost:3000");
+    console.log("Ready! http://127.0.0.1:3000");
     if (argv["launch"]) {
-        exec("open \"http://localhost:3000\"", (error, stdout, stderr) => {
+        exec("open \"http://127.0.0.1:3000\"", (error, stdout, stderr) => {
             if (error) {
                 console.log("Couldn't automatically open browser");
             }

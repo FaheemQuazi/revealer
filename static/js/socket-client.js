@@ -2,7 +2,7 @@
     if( window.location.search.match( /receiver/gi ) ) { return; }
 
     // Connect to the server
-    const socket = io('http://localhost:3000');
+    const socket = io('http://127.0.0.1:3000');
     var statusElement = document.createElement('div');
     statusElement.style.position = 'absolute';
     statusElement.style.left = '10px';
