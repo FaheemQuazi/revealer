@@ -34,7 +34,7 @@ const { Server } = require("socket.io");
 const { JSDOM } = require("jsdom");
 
 // CWD + Find slide decks
-const cwd = process.cwd();
+const cwd = (process.env["TEST"] == "TRUE") ? path.join(process.cwd(), "test") : process.cwd();
 var decks = [];
 
 function scanFiles() {
