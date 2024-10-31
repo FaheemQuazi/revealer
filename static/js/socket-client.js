@@ -1,43 +1,40 @@
 (function () {
     if( window.location.search.match( /receiver/gi ) ) { return; }
 
-    // Connect to the server
-    const socket = io('http://127.0.0.1:3000');
-    var statusElement = document.createElement('div');
-    statusElement.style.position = 'absolute';
-    statusElement.style.left = '10px';
-    statusElement.style.top = '10px';
-    statusElement.style.margin = '10px';
-    statusElement.style.padding = '5px';
-    statusElement.style.backgroundColor = 'red';
-    statusElement.style.display = 'block';
-    statusElement.style.fontFamily = 'monospace';
-    statusElement.style.fontSize = '10px';
-    statusElement.style.color = 'white';
-    document.body.appendChild(statusElement);
+    // Instantiate SocketIO
+    const socket = io({
+        autoConnect: false
+    });
+    // grab elements from sm-window
+    const elmSockState = document.querySelector("#sm-socket-state");
+    const elmSockAddr = document.querySelector("#sm-socket-addr");
+    const elmBtnConn = document.querySelector("#sm-socket-conn");
 
     // Handle connection event
     socket.on('connect', () => {
         console.log('Connected to server');
-        statusElement.innerText = "Connected";
-        statusElement.style.display = 'block';
-        statusElement.style.backgroundColor = 'green';
-        statusElement.style.opacity = 1;
-        setTimeout(() => {
-            statusElement.style.display = 'none';
-        }, 3000);
+        elmSockState.innerHTML = "Connected";
+        elmSockAddr.setAttribute("disabled", "true");
+        elmBtnConn.innerHTML = "Disconnect";
     });
     
     // Handle disconnection event
     socket.on('disconnect', () => {
         console.log('Disconnected from server');
-        statusElement.innerText = "Disconnected";
-        statusElement.style.display = 'block';
-        statusElement.style.backgroundColor = 'red';
-        statusElement.style.opacity = 1;
-        setTimeout(() => {
-            statusElement.style.opacity=0.25;
-        }, 3000);
+        elmSockState.innerHTML = "Disconnected";
+        elmSockAddr.removeAttribute("disabled");
+        elmBtnConn.innerHTML = "Connect";
+    });
+
+    socket.on("connect-error", (error) => {
+        console.log('Conn Err', error);
+        if (socket.active) {
+            elmSockState.innerHTML = "Connection Error";
+        } else {
+            elmSockState.innerHTML = "Connection Denied";
+            elmSockAddr.removeAttribute("disabled");
+            elmBtnConn.innerHTML = "Connect";
+        }
     });
 
     socket.on('refresh', () => {
@@ -56,11 +53,23 @@
     // Ensure first slide is broadcast
     Reveal.on( 'ready', event => {
         // event.currentSlide, event.indexh, event.indexv
-        socket.emit('slidechanged', { 
-            indexh: event.indexh, 
-            indexv: event.indexv, 
-            notes: Reveal.getSlideNotes(slide=Reveal.getSlide(event.indexh, event.indexv))
-        });
-        socket.emit('slidenote', Reveal.getSlideNotes(slide=Reveal.getSlide(event.indexh, event.indexv)));
+        if (socket.connected) {
+            socket.emit('slidechanged', { 
+                indexh: event.indexh, 
+                indexv: event.indexv, 
+                notes: Reveal.getSlideNotes(slide=Reveal.getSlide(event.indexh, event.indexv))
+            });
+            socket.emit('slidenote', Reveal.getSlideNotes(slide=Reveal.getSlide(event.indexh, event.indexv)));
+        }
+    });
+
+    // connection button handler in sm-window
+    elmBtnConn.addEventListener("click", (evt) => {
+        if (socket.connected) {
+            socket.disconnect()
+        } else {
+            socket.io.uri = elmSockAddr.value;
+            socket.connect();
+        }
     });
 })();

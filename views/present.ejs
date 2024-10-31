@@ -15,10 +15,22 @@
 		
 		<!-- extra layouts for presentations -->
 		<link rel="stylesheet" href="/static/css/layouts.css">
+		
+		<!-- Configuration View (sm-window) stylesheet -->
+		<link rel="stylesheet" href="/static/css/revealer-config.css">
 	</head>
 	<body>
 		<div class="reveal">
             <%- deck %>
+		</div>
+		<div class="sm-window hidden">
+			<div style="font-weight: bold; font-size: large; text-decoration: underline;">Revealer Configuration</div>
+			<div>Socket status:&nbsp;<span id="sm-socket-state">Disconnected</span></div>
+			<div>
+				<label for="sm-socket-addr">Socket Address:</label>&nbsp;
+				<input type="text" id="sm-socket-addr" value="http://127.0.0.1:3000"/>
+			</div>
+			<div><button id="sm-socket-conn" style="width: 100%; padding: 5px">Connect</button></div>
 		</div>
 
 		<script src="dist/reveal.js"></script>
@@ -53,6 +65,12 @@
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
 			});
 			
+			// toggle visibility of revealer config window (sm-window)
+			window.addEventListener("keypress", (ev) => {
+				if (ev.altKey && (ev.key == "®" || ev.key == "r")) {
+					document.querySelector(".sm-window").classList.toggle("hidden");
+				}
+			})
 		</script>
         <script src="/socket.io/socket.io.min.js"></script>
         <script src="/static/js/socket-client.js"></script>

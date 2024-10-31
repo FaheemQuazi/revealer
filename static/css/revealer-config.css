@@ -1,0 +1,23 @@
+.sm-window {
+    position: absolute;
+    z-index: 999;
+    top: 20px;
+    left: 20px;
+    padding: 20px;
+    background-color: #333333;
+    color:white;
+    border: 4px solid white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.sm-window * {
+    margin: 0;
+    padding: 0;
+}
+.hidden {
+    display: none;
+}
+#sm-socket-addr:disabled {
+    background-color: #333333;
+    color: white;
+    border: none;
+}
