@@ -43,7 +43,7 @@
 
     // Slide change handler
     Reveal.on('slidechanged', function(event) {
-        socket.emit('slidechanged', { 
+        socket.emit('rv-slide-change', { 
             indexh: event.indexh, 
             indexv: event.indexv, 
             notes: Reveal.getSlideNotes(slide=Reveal.getSlide(event.indexh, event.indexv))
@@ -54,12 +54,11 @@
     Reveal.on( 'ready', event => {
         // event.currentSlide, event.indexh, event.indexv
         if (socket.connected) {
-            socket.emit('slidechanged', { 
+            socket.emit('rv-slide-change', { 
                 indexh: event.indexh, 
                 indexv: event.indexv, 
                 notes: Reveal.getSlideNotes(slide=Reveal.getSlide(event.indexh, event.indexv))
             });
-            socket.emit('slidenote', Reveal.getSlideNotes(slide=Reveal.getSlide(event.indexh, event.indexv)));
         }
     });
 

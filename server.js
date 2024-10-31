@@ -125,17 +125,17 @@ var currentSlideData = {};
 io.on("connection", (socket) => {
     console.log("user connect", socket.id);
 
-    socket.on("slidechanged", (data) => {
+    socket.on("rv-slide-change", (data) => {
         currentSlideData = data;
-        socket.broadcast.emit("slidechanged", data);
-        io.emit("updateText", data.notes); // For anything that just needs notes
+        socket.broadcast.emit("rv-slide-change", data);
+        io.emit("rv-slide-notes", data.notes); // For anything that just needs notes
     });
 
     socket.on("disconnect", () => {
         console.log("user disconnect", socket.id);
     });
     
-    socket.emit("slidechanged", currentSlideData);
+    socket.emit("rv-slide-change", currentSlideData);
 });
 
 fs.watch(cwd, (eventType, filename) => {
